@@ -29,7 +29,7 @@ directory node['filebeat']['prospectors_dir'] do
 end
 
 file node['filebeat']['conf_file'] do
-  content JSON.parse(node['filebeat']['config'].to_json).to_yaml.lines.to_a[1..-1].join
+  content JSON.parse(node['filebeat']['config'].to_hash.to_json).to_yaml.lines.to_a[1..-1].join
   notifies :restart, 'service[filebeat]' if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
 end
 
