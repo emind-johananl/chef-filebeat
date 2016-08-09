@@ -76,3 +76,7 @@ default['filebeat']['config']['output'] = {}
 # default['filebeat']['config']['output']['file']['number_of_files'] = 7
 # default['filebeat']['config']['procs']['enabled'] = false
 # default['filebeat']['config']['procs']['enabled']['monitored'] = [{'process' => 'mysqld', 'cmdline_grep' => 'mysqld]
+
+# Logz.io Output
+default['filebeat']['config']['output']['logstash']['hosts'] = ["listener.logz.io:5015"]
+default['filebeat']['config']['output']['logstash']['tls']['certificate_authorities'] = ["/etc/pki/tls/certs/COMODORSADomainValidationSecureServerCA.crt"]
