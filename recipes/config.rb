@@ -43,10 +43,6 @@ prospectors.each do |prospector, configuration|
   end
 end
 
-service 'filebeat' do
-  action :restart
-end
-
 ruby_block 'delay filebeat service start' do
   block do
   end
@@ -54,7 +50,7 @@ ruby_block 'delay filebeat service start' do
   not_if { node['filebeat']['disable_service'] }
 end
 
-service_action = node['filebeat']['disable_service'] ? [:disable, :stop] : [:enable, :nothing]
+service_action = node['filebeat']['disable_service'] ? [:disable, :stop] : [:enable, :restart]
 
 service 'filebeat' do
   provider Chef::Provider::Service::Solaris if node['platform_family'] == 'solaris2'
