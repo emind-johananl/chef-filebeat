@@ -39,8 +39,12 @@ prospectors.each do |prospector, configuration|
   file "prospector-#{prospector}" do
     path ::File.join(node['filebeat']['prospectors_dir'], "prospector-#{prospector}.yml")
     content JSON.parse(configuration.to_json).to_yaml.lines.to_a[1..-1].join
-    notifies :restart, 'service[filebeat]', :immediately if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
+    notifies :restart, 'service[filebeat]' if node['filebeat']['notify_restart'] && !node['filebeat']['disable_service']
   end
+end
+
+service 'filebeat' do
+  action :restart
 end
 
 ruby_block 'delay filebeat service start' do
